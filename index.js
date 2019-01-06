@@ -204,35 +204,31 @@ export default class RNSketchCanvas extends React.Component {
   render() {
     return (
       <View style={this.props.containerStyle}>
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'flex-start' }}>
+      <View style={{ margin:13 }}>
+              <TouchableOpacity 
+              style={{marginBottom:33}}
+              onPress={() => { this.props.handlePressCloseScreen() }}>
+                {this.props.cancelComponent}
+              </TouchableOpacity>
+
+              {this.props.undoComponent && (
+                <TouchableOpacity
+                style={{marginBottom:33}}
+                 onPress={() => { this.props.onUndoPressed(this.undo()) }}>
+                  {this.props.undoComponent}
+                </TouchableOpacity>)
+              }
+
             {this.props.closeComponent && (
               <TouchableOpacity onPress={() => { this.props.onClosePressed() }}>
                 {this.props.closeComponent}
               </TouchableOpacity>)
             }
 
-            {this.props.eraseComponent && (
-              <TouchableOpacity onPress={() => { this.setState({ color: '#00000000' }) }}>
-                {this.props.eraseComponent}
-              </TouchableOpacity>)
-            }
-          </View>
-          <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'flex-end' }}>
-            {this.props.strokeWidthComponent && (
-              <TouchableOpacity onPress={() => { this.nextStrokeWidth() }}>
-                {this.props.strokeWidthComponent(this.state.strokeWidth)}
-              </TouchableOpacity>)
-            }
-
-            {this.props.undoComponent && (
-              <TouchableOpacity onPress={() => { this.props.onUndoPressed(this.undo()) }}>
-                {this.props.undoComponent}
-              </TouchableOpacity>)
-            }
-
             {this.props.clearComponent && (
-              <TouchableOpacity onPress={() => { this.clear(); this.props.onClearPressed() }}>
+              <TouchableOpacity
+              style={{marginBottom:33}}
+               onPress={() => { this.clear(); this.props.onClearPressed() }}>
                 {this.props.clearComponent}
               </TouchableOpacity>)
             }
@@ -242,7 +238,6 @@ export default class RNSketchCanvas extends React.Component {
                 {this.props.saveComponent}
               </TouchableOpacity>)
             }
-          </View>
         </View>
         <SketchCanvas
           ref={ref => this._sketchCanvas = ref}
@@ -260,13 +255,36 @@ export default class RNSketchCanvas extends React.Component {
           permissionDialogTitle={this.props.permissionDialogTitle}
           permissionDialogMessage={this.props.permissionDialogMessage}
         />
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ margin:13 }}>
+          <TouchableOpacity 
+          style={{marginBottom:33}}
+          onPress={() => { this.props.handlePressNextScreen() }}>
+                <Text
+                style={{fontSize:17, fontWeight:'bold'}}
+                >다음</Text>
+          </TouchableOpacity>
+
+          {this.props.eraseComponent && (
+            <TouchableOpacity 
+            style={{marginBottom:33}}
+            onPress={() => { this.setState({ color: '#00000000' }) }}>
+              {this.props.eraseComponent}
+            </TouchableOpacity>)
+          }
+
+          {this.props.strokeWidthComponent && (
+            <TouchableOpacity 
+            style={{marginBottom:33}}
+            onPress={() => { this.nextStrokeWidth() }}>
+              {this.props.strokeWidthComponent(this.state.strokeWidth)}
+            </TouchableOpacity>)
+          }
+
           <FlatList
             data={this.props.strokeColors}
             extraData={this.state}
             keyExtractor={() => Math.ceil(Math.random() * 10000000).toString()}
             renderItem={this._renderItem}
-            horizontal
             showsHorizontalScrollIndicator={false}
           />
         </View>
@@ -283,3 +301,12 @@ RNSketchCanvas.CACHES = SketchCanvas.CACHES;
 export {
   SketchCanvas
 }
+
+// <FlatList
+//             data={this.props.strokeColors}
+//             extraData={this.state}
+//             keyExtractor={() => Math.ceil(Math.random() * 10000000).toString()}
+//             renderItem={this._renderItem}
+//             horizontal
+//             showsHorizontalScrollIndicator={false}
+//           />
