@@ -112,7 +112,7 @@ class SketchCanvas extends React.Component {
   undo() {
     let lastId = -1;
     this._paths.forEach(d => lastId = d.drawer === this.props.user ? d.path.id : lastId)
-    if (lastId >= 0) this.deletePath(lastId)
+//     if (lastId >= 0) this.deletePath(lastId)
     return lastId
   }
 
